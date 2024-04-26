@@ -7,6 +7,7 @@ import { getClassList } from '@src/utils/classes';
 import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import rehypeExternalLinks from 'rehype-external-links';
+import remarkBreaks from 'remark-breaks';
 
 const useStyles = makeStyles((theme: Theme & { [customKey: string]: any }) => ({
   root: {
@@ -18,7 +19,7 @@ const useStyles = makeStyles((theme: Theme & { [customKey: string]: any }) => ({
     justifyContent: 'center',
     margin: 0,
     [theme.breakpoints.down(600)]: {
-      fontSize: '9vw',
+      fontSize: '3vw',
       width: '100%',
     },
   },
@@ -112,8 +113,8 @@ export default function SurveyInfoPage({
         alignItems: 'center',
       }}
     >
-      <Grid container spacing={4} className={classes.root}>
-        <Grid item xs={12} style={{ padding: 0 }}>
+      <Grid container spacing={4} className={classes.root} style={{padding: '20px'}}>
+        <Grid item xs={12} style={{ padding: 0}}>
           {infoPageContent?.title?.[surveyLanguage] && (
             <Typography
               className={getClassList([classes.heading, classes.title])}
@@ -123,7 +124,7 @@ export default function SurveyInfoPage({
             </Typography>
           )}
           {infoPageContent?.text?.[surveyLanguage] && (
-            <ReactMarkdown rehypePlugins={[rehypeExternalLinks]}>
+            <ReactMarkdown rehypePlugins={[rehypeExternalLinks]} remarkPlugins={[remarkBreaks]}>
               {infoPageContent?.text[surveyLanguage]}
             </ReactMarkdown>
           )}
