@@ -110,7 +110,7 @@ export function getGeoJSONColumn(
         : value.properties?.bufferRadius != null
         ? // If geometry provided with buffer radius, add ST_Buffer
           pgp.as.format(
-            'public.ST_Buffer(public.ST_SetSRID(public.ST_GeomFromGeoJSON($1), $2), $4)',
+            'public.ST_Buffer(public.ST_SetSRID(public.ST_GeomFromGeoJSON($1), $2), $3)',
             [value, inputSRID, value.properties.bufferRadius],
           )
         : pgp.as.format(
