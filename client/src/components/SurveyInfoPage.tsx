@@ -5,6 +5,8 @@ import { useSurveyAnswers } from '@src/stores/SurveyAnswerContext';
 import { useTranslations } from '@src/stores/TranslationContext';
 import { getClassList } from '@src/utils/classes';
 import React, { useState } from 'react';
+import ReactMarkdown from 'react-markdown';
+import rehypeExternalLinks from 'rehype-external-links';
 
 const useStyles = makeStyles((theme: Theme & { [customKey: string]: any }) => ({
   root: {
@@ -92,6 +94,8 @@ export default function SurveyInfoPage({
   const [personalInfoValues, setPersonalInfoValues] =
     useState<PersonalInfo>(null);
 
+  const showQuery = personalInfoQuery?.name ?? personalInfoQuery?.email ?? personalInfoQuery?.phoneNumber;
+
   return (
     <form
       onSubmit={(event) => {
@@ -119,12 +123,9 @@ export default function SurveyInfoPage({
             </Typography>
           )}
           {infoPageContent?.text?.[surveyLanguage] && (
-            <Typography
-              className={getClassList([classes.subtitle])}
-              variant="body1"
-            >
+            <ReactMarkdown rehypePlugins={[rehypeExternalLinks]}>
               {infoPageContent?.text[surveyLanguage]}
-            </Typography>
+            </ReactMarkdown>
           )}
         </Grid>
         <Grid
@@ -138,10 +139,10 @@ export default function SurveyInfoPage({
             padding: '2rem 0 0 0',
           }}
         >
-          <Typography style={{ paddingBottom: '1rem' }}>
+          {showQuery && <Typography style={{ paddingBottom: '1rem' }}>
             {' '}
             {tr.SurveyInfoPage.fillEntries}:{' '}
-          </Typography>
+          </Typography>}
           {personalInfoQuery.name && (
             <TextField
               className={classes.textField}
