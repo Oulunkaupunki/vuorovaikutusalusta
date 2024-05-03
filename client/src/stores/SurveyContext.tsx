@@ -289,12 +289,12 @@ export function useSurvey() {
      * Deletes page with given ID.
      * @param pageId Page ID
      */
-    async deletePage(pageId: number) {
+    async deletePage(surveyId: number, pageId: number) {
       dispatch({
         type: 'START_LOADING_ACTIVE_SURVEY',
       });
       try {
-        await request(`/api/surveys/page/${pageId}`, { method: 'DELETE' });
+        await request(`/api/surveys/${surveyId}/page/${pageId}`, { method: 'DELETE' });
         dispatch({ type: 'DELETE_PAGE', pageId });
         dispatch({
           type: 'STOP_LOADING_ACTIVE_SURVEY',
